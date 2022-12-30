@@ -4,11 +4,11 @@
 <h4 align="center"> 
 	🚧  App-Orgs-Room kotlin 🚀 Construção  ...  🚧
 </h4>
-App de simulação para o curso de personalização de UI no Android com Kotlin Escola Alura-Cursos
+App  persistencia-de-dados-com-room  Android com Kotlin Escola Alura-Cursos
 
 ## 🔨 Funcionalidades do projeto
 
-O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar produtos. Todo armazenamento é mantido em memória do App, portanto, ao finalizar o App as informações são perdidas.
+O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar, editar, deletar e listar produtos.
 
 ![](img/amostra.gif)
 
