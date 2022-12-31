@@ -8,7 +8,7 @@ App  persistencia-de-dados-com-room  Android com Kotlin Escola Alura-Cursos
 
 ## 🔨 Funcionalidades do projeto
 
-O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar, editar, deletar e listar produtos.
+O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar, editar, deletar produtos.
 
 ![](img/amostra.gif)
 

@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+
     def room_version = "2.3.0"
 
     //noinspection GradleDependency
