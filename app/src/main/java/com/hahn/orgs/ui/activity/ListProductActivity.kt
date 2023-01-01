@@ -3,7 +3,6 @@ package com.hahn.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.hahn.orgs.dao.ProductDao
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityListProductBinding
@@ -21,17 +20,14 @@ class ListProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configRecyclerView()
-        val db = Room.databaseBuilder(
-            this,
-            AppDatabase::class.java,
-            "orgs.db"
-        ).build()
+        confgFab()
     }
     
     override fun onResume() {
         super.onResume()
-        adapter.update(dao.findAll())
-        confgFab()
+        val db = AppDatabase.getInstance(this)
+        val productDao = db.productDao()
+        adapter.update(productDao.findAll())
     }
     
     private fun confgFab() {

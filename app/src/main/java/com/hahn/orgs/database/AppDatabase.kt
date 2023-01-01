@@ -9,17 +9,19 @@ import com.hahn.orgs.database.converter.Converters
 import com.hahn.orgs.database.dao.ProductDao
 import com.hahn.orgs.model.Product
 
-@Database(entities = [Product::class], version = 1)
+@Database(entities = [Product::class], version = 1,exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
     
     companion object {
-        fun getInstance(context: Context) {
-            Room.databaseBuilder(
+        fun getInstance(context: Context): AppDatabase {
+            return Room.databaseBuilder(
                 context,
-                AppDatabase::class.java, "orgs.db"
-            ).build()
+                AppDatabase::class.java,
+                "orgs.db"
+            ).allowMainThreadQueries()
+                .build()
         }
     }
 }

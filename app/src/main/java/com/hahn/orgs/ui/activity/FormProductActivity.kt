@@ -2,7 +2,6 @@ package com.hahn.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityFormProductBinding
 import com.hahn.orgs.extensions.tryloadimage
@@ -34,13 +33,8 @@ class FormProductActivity : AppCompatActivity() {
     
     private fun confgBtnSave() {
         val btnSave = binding.btnFormSaveProd
-        val db = Room.databaseBuilder(
-            this,
-            AppDatabase::class.java,
-            "orgs.db"
-        ).build()
+        val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
-        
         btnSave.setOnClickListener {
             val newProduct = createProduct()
             productDao.store(newProduct)
