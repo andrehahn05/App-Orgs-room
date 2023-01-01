@@ -3,15 +3,13 @@ package com.hahn.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.hahn.orgs.dao.ProductDao
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityListProductBinding
 import com.hahn.orgs.ui.recyclerView.adapter.ProductListAdapter
 
 class ListProductActivity : AppCompatActivity() {
     
-    private val dao = ProductDao()
-    private val adapter = ProductListAdapter(context = this, products = dao.findAll())
+    private val adapter = ProductListAdapter(context = this)
     private val binding by lazy {
         ActivityListProductBinding.inflate(layoutInflater)
     }
@@ -27,7 +25,7 @@ class ListProductActivity : AppCompatActivity() {
         super.onResume()
         val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
-        adapter.update(productDao.findAll())
+        adapter.update(products = productDao.findAll())
     }
     
     private fun confgFab() {
