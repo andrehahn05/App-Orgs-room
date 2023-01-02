@@ -15,9 +15,14 @@ import com.hahn.orgs.model.Product
 
 class DetailsProductActivity : AppCompatActivity() {
     
-    private lateinit var product: Product
+    private var productId: Long? = null
+    private var product: Product? = null
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
+    }
+    
+    private val productDao by lazy {
+        AppDatabase.getInstance(this).productDao()
     }
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,25 +31,31 @@ class DetailsProductActivity : AppCompatActivity() {
         tryLoadProduct()
     }
     
+    override fun onResume() {
+        super.onResume()
+        productId?.let { id ->
+            product = productDao.findById(id)
+        }
+        product?.let {
+            completedFields(it)
+        } ?: finish()
+    }
+    
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_details_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
     
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (::product.isInitialized) {
-            val db = AppDatabase.getInstance(this)
-            val productDao = db.productDao()
-            when (item.itemId) {
-                R.id.menu_prod_details_remove -> {
-                    productDao.remove(product)
-                    finish()
-                }
-                R.id.menu_prod_details_edit -> {
-                    Intent(this,FormProductActivity::class.java).apply {
-                        putExtra(KEY_PRODUCT,product)
-                        startActivity(this)
-                    }
+        when (item.itemId) {
+            R.id.menu_prod_details_remove -> {
+                product?.let { productDao.remove(it) }
+                finish()
+            }
+            R.id.menu_prod_details_edit -> {
+                Intent(this, FormProductActivity::class.java).apply {
+                    putExtra(KEY_PRODUCT, product)
+                    startActivity(this)
                 }
             }
         }
@@ -54,7 +65,7 @@ class DetailsProductActivity : AppCompatActivity() {
     private fun tryLoadProduct() {
         @Suppress("DEPRECATION")
         intent.getParcelableExtra<Product>(KEY_PRODUCT)?.let { loadedProduct ->
-            product = loadedProduct
+            productId = loadedProduct.id
             completedFields(loadedProduct)
         } ?: finish()
     }

@@ -33,6 +33,7 @@ class FormProductActivity : AppCompatActivity() {
         @Suppress("DEPRECATION")
         intent.getParcelableExtra<Product>(KEY_PRODUCT)?.let { loadedProduct ->
             title = "Alterar produdo"
+            url = loadedProduct.image
             idProduct = loadedProduct.id
             binding.activityFormImageView.tryloadimage(loadedProduct.image)
             binding.activityFormName.setText(loadedProduct.name)
@@ -47,7 +48,11 @@ class FormProductActivity : AppCompatActivity() {
         val productDao = db.productDao()
         btnSave.setOnClickListener {
             val newProduct = createProduct()
-            productDao.store(newProduct)
+            if(idProduct > 0){
+                productDao.update(newProduct)
+            }else{
+                productDao.store(newProduct)
+            }
             finish()
         }
     }
@@ -62,6 +67,7 @@ class FormProductActivity : AppCompatActivity() {
         val value = if (priceTxt.isBlank()) BigDecimal.ZERO else BigDecimal(priceTxt)
         
         return Product(
+            id = idProduct,
             name = name,
             description = descripition,
             price = value,
