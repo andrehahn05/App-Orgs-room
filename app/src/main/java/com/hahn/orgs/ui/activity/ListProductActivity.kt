@@ -25,7 +25,7 @@ class ListProductActivity : AppCompatActivity() {
         super.onResume()
         val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
-        adapter.update(products = productDao.findAll())
+        adapter.toUpdate(products = productDao.findAll())
     }
     
     private fun confgFab() {
