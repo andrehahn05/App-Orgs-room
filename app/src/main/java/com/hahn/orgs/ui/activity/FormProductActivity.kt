@@ -15,6 +15,7 @@ class FormProductActivity : AppCompatActivity() {
         ActivityFormProductBinding.inflate(layoutInflater)
     }
     private var url: String? = null
+    private  var idProduct = 0L
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,15 @@ class FormProductActivity : AppCompatActivity() {
                 }
         }
         
+        @Suppress("DEPRECATION")
+        intent.getParcelableExtra<Product>(KEY_PRODUCT)?.let { loadedProduct ->
+            title = "Alterar produdo"
+            idProduct = loadedProduct.id
+            binding.activityFormImageView.tryloadimage(loadedProduct.image)
+            binding.activityFormName.setText(loadedProduct.name)
+            binding.activityFormDescription.setText(loadedProduct.description)
+            binding.activityFormVal.setText(loadedProduct.price.toPlainString())
+        }
     }
     
     private fun confgBtnSave() {

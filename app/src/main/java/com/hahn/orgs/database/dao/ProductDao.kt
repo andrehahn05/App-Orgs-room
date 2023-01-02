@@ -10,4 +10,11 @@ interface ProductDao {
     
     @Insert
     fun store(vararg product:Product)
+    
+    @Update
+    fun updateProd(vararg product: Product)
+    
+    @Delete
+    fun remove( product: Product)
+    
 }
