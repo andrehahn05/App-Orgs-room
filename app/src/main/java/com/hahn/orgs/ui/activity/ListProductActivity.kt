@@ -43,7 +43,7 @@ class ListProductActivity : AppCompatActivity() {
             val intent = Intent(this,
                 DetailsProductActivity::class.java
             ).apply {
-                putExtra(KEY_PRODUCT, it)
+                putExtra(KEY_PRODUCT_ID, it.id)
             }
             startActivity(intent)
         }

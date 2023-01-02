@@ -15,7 +15,7 @@ import com.hahn.orgs.model.Product
 
 class DetailsProductActivity : AppCompatActivity() {
     
-    private var productId: Long? = null
+    private var productId: Long = 0L
     private var product: Product? = null
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
@@ -33,9 +33,7 @@ class DetailsProductActivity : AppCompatActivity() {
     
     override fun onResume() {
         super.onResume()
-        productId?.let { id ->
-            product = productDao.findById(id)
-        }
+        product = productDao.findById(productId)
         product?.let {
             completedFields(it)
         } ?: finish()
@@ -54,7 +52,7 @@ class DetailsProductActivity : AppCompatActivity() {
             }
             R.id.menu_prod_details_edit -> {
                 Intent(this, FormProductActivity::class.java).apply {
-                    putExtra(KEY_PRODUCT, product)
+                    putExtra(KEY_PRODUCT_ID, productId)
                     startActivity(this)
                 }
             }
@@ -63,11 +61,7 @@ class DetailsProductActivity : AppCompatActivity() {
     }
     
     private fun tryLoadProduct() {
-        @Suppress("DEPRECATION")
-        intent.getParcelableExtra<Product>(KEY_PRODUCT)?.let { loadedProduct ->
-            productId = loadedProduct.id
-            completedFields(loadedProduct)
-        } ?: finish()
+        productId = intent.getLongExtra(KEY_PRODUCT_ID, 0L)
     }
     
     private fun completedFields(loadedProduct: Product) {
