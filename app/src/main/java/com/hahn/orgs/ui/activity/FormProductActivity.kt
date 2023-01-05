@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.database.dao.ProductDao
 import com.hahn.orgs.databinding.ActivityFormProductBinding
-import com.hahn.orgs.extensions.tryloadimage
+import com.hahn.orgs.extensions.tryLoadimage
 import com.hahn.orgs.model.Product
 import com.hahn.orgs.ui.dialog.FormImageDialog
 import java.math.BigDecimal
@@ -38,7 +38,7 @@ class FormProductActivity : AppCompatActivity() {
             FormImageDialog(this)
                 .showDialog(url) { image ->
                     url = image
-                    binding.activityFormImageView.tryloadimage(url)
+                    binding.activityFormImageView.tryLoadimage(url)
                 }
         }
     }
@@ -62,7 +62,7 @@ class FormProductActivity : AppCompatActivity() {
         title = "Alterar produdo"
         url = product.image
         with(binding) {
-            activityFormImageView.tryloadimage(product.image)
+            activityFormImageView.tryLoadimage(product.image)
             activityFormName.setText(product.name)
             activityFormDescription.setText(product.description)
             activityFormVal.setText(product.price.toPlainString())

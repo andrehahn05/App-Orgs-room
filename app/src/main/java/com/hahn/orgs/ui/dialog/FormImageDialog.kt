@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.hahn.orgs.databinding.FormImageBinding
-import com.hahn.orgs.extensions.tryloadimage
+import com.hahn.orgs.extensions.tryLoadimage
 
 class FormImageDialog(private val context: Context) {
     fun showDialog(
@@ -14,13 +14,13 @@ class FormImageDialog(private val context: Context) {
         FormImageBinding
             .inflate(LayoutInflater.from(context)).apply {
                 urlDefault?.let {
-                    formImageViewImg.tryloadimage(it)
+                    formImageViewImg.tryLoadimage(it)
                     formImgUrl.setText(it)
                 }
                 
                 formImgBtnLoad.setOnClickListener {
                     val url: String = formImgUrl.text.toString()
-                    formImageViewImg.tryloadimage(url)
+                    formImageViewImg.tryLoadimage(url)
                 }
         
                 AlertDialog.Builder(context)

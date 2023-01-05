@@ -9,7 +9,8 @@ import java.math.BigDecimal
 @Entity
 @Parcelize
 data class Product(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,
     val name: String,
     val description: String,
     val price: BigDecimal,

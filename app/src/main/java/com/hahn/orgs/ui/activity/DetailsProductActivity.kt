@@ -9,7 +9,7 @@ import com.hahn.orgs.R
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityProductDetailsBinding
 import com.hahn.orgs.extensions.formatPtBr
-import com.hahn.orgs.extensions.tryloadimage
+import com.hahn.orgs.extensions.tryLoadimage
 import com.hahn.orgs.model.Product
 
 
@@ -66,7 +66,7 @@ class DetailsProductActivity : AppCompatActivity() {
     
     private fun completedFields(loadedProduct: Product) {
         with(binding) {
-            activityDetailsProductImage.tryloadimage(loadedProduct.image)
+            activityDetailsProductImage.tryLoadimage(loadedProduct.image)
             activityDetailsProductName.text = loadedProduct.name
             activityDetailsProductDescription.text = loadedProduct.description
             activityDetailsProductValue.text = loadedProduct.price.formatPtBr()

@@ -15,7 +15,7 @@ interface ProductDao {
 //    fun update(product: Product)
     
     @Delete
-    fun remove( product: Product)
+  fun remove( product: Product)
     
     @Query("SELECT * FROM Product WHERE id = :id")
     abstract fun findById(id: Long) : Product?
