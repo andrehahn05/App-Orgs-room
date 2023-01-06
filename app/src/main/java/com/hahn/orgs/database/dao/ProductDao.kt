@@ -9,15 +9,12 @@ interface ProductDao {
     fun findAll(): List<Product>
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun store(vararg product:Product)
-    
-//    @Update
-//    fun update(product: Product)
+    fun store( product:Product)
     
     @Delete
-  fun remove( product: Product)
+    fun remove( product: Product)
     
     @Query("SELECT * FROM Product WHERE id = :id")
-    abstract fun findById(id: Long) : Product?
+    fun findById(id: Long) : Product?
     
 }

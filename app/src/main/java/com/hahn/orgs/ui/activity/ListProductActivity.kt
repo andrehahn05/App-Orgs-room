@@ -3,16 +3,17 @@ package com.hahn.orgs.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityListProductBinding
+import com.hahn.orgs.extensions.toast
+import com.hahn.orgs.model.Product
 import com.hahn.orgs.ui.recyclerView.adapter.ProductListAdapter
 
 class ListProductActivity : AppCompatActivity() {
     
-//    private var productId: Long = 0L
-//    private var product: Product? = null
+    private var productId: Long = 0L
+    private var product: Product? = null
     private val adapter = ProductListAdapter(context = this)
     private val binding by lazy {
         ActivityListProductBinding.inflate(layoutInflater)
@@ -24,16 +25,18 @@ class ListProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        configRecyclerView()
         confgFab()
+        tryLoadProduct()
+        
     }
     
     override fun onResume() {
+        
         super.onResume()
+        configRecyclerView()
         val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
         adapter.toUpdate(products = productDao.findAll())
-        
     }
     
     private fun confgFab() {
@@ -50,6 +53,10 @@ class ListProductActivity : AppCompatActivity() {
             }
     }
     
+    private fun tryLoadProduct() {
+        productId = intent.getLongExtra(KEY_PRODUCT_ID, 0L)
+    }
+    
     @SuppressLint("NotifyDataSetChanged")
     private fun configRecyclerView() {
         val recyclerView = binding.activityListProdRecyclerView
@@ -61,12 +68,11 @@ class ListProductActivity : AppCompatActivity() {
                     startActivity(this)
                 }
         }
-    
+        
         adapter.handleClickOnRemove = {
+            product?.let { productDao.remove(it) }
+            toast("Produto removido com sucesso!!")
             
-            productDao.remove(it)
-    
-            Toast.makeText(this,"Produto Deletado", Toast.LENGTH_SHORT).show()
         }
         
         adapter.handleClickOnEdit = {
@@ -76,10 +82,8 @@ class ListProductActivity : AppCompatActivity() {
                     startActivity(this)
                 }
         }
-      
-
-        }
         
     }
+}
 
 
