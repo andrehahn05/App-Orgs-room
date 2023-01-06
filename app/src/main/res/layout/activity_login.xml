@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:context=".ui.activity.LoginActivity">
 
         <ImageView
             android:id="@+id/activity_login_image_logo"
@@ -32,7 +33,7 @@
             app:layout_constraintTop_toBottomOf="@id/activity_login_image_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputlayout_user"
+            android:id="@+id/textInputlayout_username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@id/activity_login_title">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/activity_login_user"
+                android:id="@+id/activity_login_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Usuário"
@@ -60,10 +61,10 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textInputlayout_user">
+            app:layout_constraintTop_toBottomOf="@id/textInputlayout_username">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/activity_login_senha"
+                android:id="@+id/activity_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Senha"
