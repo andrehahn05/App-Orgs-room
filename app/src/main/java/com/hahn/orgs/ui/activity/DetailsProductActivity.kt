@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.R
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityProductDetailsBinding
 import com.hahn.orgs.extensions.formatPtBr
 import com.hahn.orgs.extensions.tryLoadimage
 import com.hahn.orgs.model.Product
+import kotlinx.coroutines.launch
 
 
 class DetailsProductActivity : AppCompatActivity() {
@@ -33,10 +35,18 @@ class DetailsProductActivity : AppCompatActivity() {
     
     override fun onResume() {
         super.onResume()
-        product = productDao.findById(productId)
-        product?.let {
-            completedFields(it)
-        } ?: finish()
+       getProduct()
+    }
+    
+    private fun getProduct() {
+        lifecycleScope.launch {
+            productDao.findById(productId).collect{ productFound ->
+                product = productFound
+                product?.let {
+                    completedFields(it)
+                } ?: finish()
+            }
+        }
     }
     
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,9 +57,14 @@ class DetailsProductActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_prod_details_remove -> {
-                product?.let { productDao.remove(it) }
-                finish()
+                product?.let {
+                    lifecycleScope.launch {
+                        productDao.remove(it)
+                        finish()
+                    }
+                }
             }
+            
             R.id.menu_prod_details_edit -> {
                 Intent(this, FormProductActivity::class.java).apply {
                     putExtra(KEY_PRODUCT_ID, productId)
