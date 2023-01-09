@@ -2,38 +2,49 @@ package com.hahn.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.database.dao.ProductDao
 import com.hahn.orgs.databinding.ActivityFormProductBinding
 import com.hahn.orgs.extensions.tryLoadimage
 import com.hahn.orgs.model.Product
 import com.hahn.orgs.ui.dialog.FormImageDialog
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 class FormProductActivity : AppCompatActivity() {
     
+    private var url: String? = null
+    private var productId = 0L
     private val binding by lazy {
         ActivityFormProductBinding.inflate(layoutInflater)
     }
-    
     private val productDao: ProductDao by lazy {
-        val db = AppDatabase.getInstance(this)
-        db.productDao()
+        AppDatabase.getInstance(this).productDao()
     }
-    private var url: String? = null
-    private var productId = 0L
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         title = "Cadastar Produto"
-        confgBtnSave()
-        handleImage()
-        
-        tryLoadProduct()
+        handleBtnSave()
+        changeImage()
+        getExtraProduct()
+        getProduct()
     }
     
-    private fun handleImage() {
+    private fun getProduct() {
+        lifecycleScope.launch {
+            productDao.findById(productId).collect {
+                it?.let {
+                    title = "Alterando ${it.name}"
+                    completedFields(it)
+                }
+            }
+        }
+    }
+    
+    private fun changeImage() {
         binding.activityFormImageView.setOnClickListener {
             FormImageDialog(this)
                 .showDialog(url) { image ->
@@ -43,18 +54,7 @@ class FormProductActivity : AppCompatActivity() {
         }
     }
     
-    override fun onResume() {
-        super.onResume()
-        getProduct()
-    }
-    
-    private fun getProduct() {
-        productDao.findById(productId)?.let {
-            completedFields(it)
-        }
-    }
-    
-    private fun tryLoadProduct() {
+    private fun getExtraProduct() {
         productId = intent.getLongExtra(KEY_PRODUCT_ID, 0L)
     }
     
@@ -69,12 +69,14 @@ class FormProductActivity : AppCompatActivity() {
         }
     }
     
-    private fun confgBtnSave() {
+    private fun handleBtnSave() {
         val btnSave = binding.btnFormSaveProd
         btnSave.setOnClickListener {
-            val newProduct = createProduct()
-            productDao.store(newProduct)
-            finish()
+            lifecycleScope.launch {
+                val newProduct = createProduct()
+                productDao.store(newProduct)
+                finish()
+            }
         }
     }
     
@@ -96,3 +98,4 @@ class FormProductActivity : AppCompatActivity() {
         )
     }
 }
+
