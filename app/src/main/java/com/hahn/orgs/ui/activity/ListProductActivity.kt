@@ -4,42 +4,44 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityListProductBinding
 import com.hahn.orgs.extensions.toast
-import com.hahn.orgs.model.Product
 import com.hahn.orgs.ui.recyclerView.adapter.ProductListAdapter
+import kotlinx.coroutines.launch
 
 class ListProductActivity : AppCompatActivity() {
     
-    private var productId: Long = 0L
-    private var product: Product? = null
-    private val adapter = ProductListAdapter(context = this)
+    private val adapter = ProductListAdapter(this)
     private val binding by lazy {
         ActivityListProductBinding.inflate(layoutInflater)
     }
-    private val productDao by lazy {
+    private val dao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        confgFab()
-        tryLoadProduct()
-        
-    }
-    
-    override fun onResume() {
-        
-        super.onResume()
         configRecyclerView()
-        val db = AppDatabase.getInstance(this)
-        val productDao = db.productDao()
-        adapter.toUpdate(products = productDao.findAll())
+        handleFab()
+        lifecycleScope.launch {
+            refreshScreen()
+        }
     }
     
-    private fun confgFab() {
+    
+    
+    private fun refreshScreen() {
+        lifecycleScope.launch {
+            dao.findAll().collect{ product ->
+                adapter.toUpdate(product)
+            }
+        }
+    }
+    
+    private fun handleFab() {
         val fab = binding.activityListProdFab
         fab.setOnClickListener {
             navigateToForm()
@@ -51,10 +53,6 @@ class ListProductActivity : AppCompatActivity() {
             .apply {
                 startActivity(this)
             }
-    }
-    
-    private fun tryLoadProduct() {
-        productId = intent.getLongExtra(KEY_PRODUCT_ID, 0L)
     }
     
     @SuppressLint("NotifyDataSetChanged")
@@ -70,9 +68,10 @@ class ListProductActivity : AppCompatActivity() {
         }
         
         adapter.handleClickOnRemove = {
-            product?.let { productDao.remove(it) }
-            toast("Produto removido com sucesso!!")
-            
+            lifecycleScope.launch {
+                dao.remove(it)
+                toast("Produto removido com sucesso!!")
+            }
         }
         
         adapter.handleClickOnEdit = {
