@@ -1,11 +1,16 @@
 package com.hahn.orgs.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
+import com.hahn.orgs.database.preferences.dataStore
+import com.hahn.orgs.database.preferences.userLoggedPreferences
 import com.hahn.orgs.databinding.ActivityLoginBinding
+import com.hahn.orgs.extensions.navigateTo
+import com.hahn.orgs.extensions.toast
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     
@@ -25,20 +30,27 @@ class LoginActivity : AppCompatActivity() {
     
     private fun handleBtnSignIn() {
         binding.activityLoginBtnSignIn.setOnClickListener {
-            val username = binding.activityLoginUsername.text.toString()
+            val user = binding.activityLoginUser.text.toString()
             val passowrd = binding.activityLoginPassword.text.toString()
-            Log.i("LoginActivity", "onCreate: $username - $passowrd")
-            val intent = Intent(this, ListProductActivity::class.java)
-            startActivity(intent)
+            verifyAuth(user, passowrd)
+        }
+    }
+    
+    private fun verifyAuth(user: String, passowrd: String) {
+        lifecycleScope.launch {
+            userDao.auth(user, passowrd)?.let { user ->
+                dataStore.edit { preferences ->
+                    preferences[userLoggedPreferences] = user.id
+                }
+                navigateTo(ListProductActivity::class.java)
+                finish()
+            } ?: toast("Usuário não encontrado")
         }
     }
     
     private fun handleBtnSignUp() {
         binding.activityLoginBtnSignup.setOnClickListener {
-            val intent = Intent(this, FormUserRegisterActivity::class.java)
-            startActivity(intent)
+           navigateTo(FormUserRegisterActivity::class.java)
         }
     }
-    
-    
 }
