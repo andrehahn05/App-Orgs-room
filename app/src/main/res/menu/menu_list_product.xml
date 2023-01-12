@@ -11,23 +11,23 @@
         <menu>
             <item
                 android:id="@+id/menu_list_product_order_nameAsc"
-                android:title="nome asc"
+                android:title="A-Z"
                 app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/menu_list_product_order_nameDesc"
-                android:title="nome desc"
+                android:title="Z-A"
                 app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/menu_list_product_order_valueAsc"
-                android:title="valor asc"
+                android:title="Menor Preço"
                 app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/menu_list_product_order_valueDesc"
-                android:title="valor desc"
+                android:title="Maior Preço"
                 app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/menu_list_product_order_noOrder"
-                android:title="sem ordem"
+                android:title="Mais Antigo"
                 app:showAsAction="ifRoom" />
 
         </menu>

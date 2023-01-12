@@ -40,13 +40,7 @@ class ListProductActivity : UserBaseActivity() {
     }
     
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_logout -> {
-                lifecycleScope.launch {
-                    logoutUser()
-                }
-            }
-        }
+        menuSetup(item)
         return super.onOptionsItemSelected(item)
     }
     
@@ -100,9 +94,51 @@ class ListProductActivity : UserBaseActivity() {
                     startActivity(this)
                 }
         }
+        
     }
     
-    
+    private fun menuSetup(item: MenuItem) {
+        when (item.itemId) {
+            R.id.menu_logout -> {
+                lifecycleScope.launch {
+                    logoutUser()
+                }
+            }
+            R.id.menu_list_product_order_nameAsc -> {
+                lifecycleScope.launch {
+                    productDao.orderNameAsc().collect() {
+                        adapter.toUpdate(it)
+                    }
+                }
+            }
+            R.id.menu_list_product_order_nameDesc -> {
+                lifecycleScope.launch {
+                    productDao.orderNameDesc().collect() {
+                        adapter.toUpdate(it)
+                    }
+                }
+            }
+            R.id.menu_list_product_order_valueAsc -> {
+                lifecycleScope.launch {
+                    productDao.orderValueAsc().collect() {
+                        adapter.toUpdate(it)
+                    }
+                }
+            }
+            R.id.menu_list_product_order_valueDesc -> {
+                lifecycleScope.launch {
+                    productDao.orderValueDesc().collect() {
+                        adapter.toUpdate(it)
+                    }
+                }
+            }
+            R.id.menu_list_product_order_noOrder -> {
+                lifecycleScope.launch {
+                    refreshScreen()
+                }
+            }
+        }
+    }
 }
 
 
