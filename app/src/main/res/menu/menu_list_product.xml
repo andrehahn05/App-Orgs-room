@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/menu_list_filter"
+        android:icon="@drawable/ic_action_sort"
+        android:title="Filter"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_list_product_order_nameAsc"
+                android:title="nome asc"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_list_product_order_nameDesc"
+                android:title="nome desc"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_list_product_order_valueAsc"
+                android:title="valor asc"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_list_product_order_valueDesc"
+                android:title="valor desc"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_list_product_order_noOrder"
+                android:title="sem ordem"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_logout"
         android:icon="@drawable/ic_action_logout"
-        android:title="logout  app"
+        android:title="Logout App"
         app:showAsAction="ifRoom" />
 </menu>
