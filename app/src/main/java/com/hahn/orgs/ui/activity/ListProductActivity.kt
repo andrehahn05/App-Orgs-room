@@ -11,6 +11,7 @@ import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityListProductBinding
 import com.hahn.orgs.extensions.toast
 import com.hahn.orgs.ui.recyclerView.adapter.ProductListAdapter
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class ListProductActivity : UserBaseActivity() {
@@ -28,14 +29,13 @@ class ListProductActivity : UserBaseActivity() {
         setContentView(binding.root)
         configRecyclerView()
         handleFab()
-        
         lifecycleScope.launch {
             refreshScreen()
         }
     }
     
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_list_product,menu)
+        menuInflater.inflate(R.menu.menu_list_product, menu)
         return super.onCreateOptionsMenu(menu)
     }
     
@@ -48,11 +48,6 @@ class ListProductActivity : UserBaseActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-    private suspend fun refreshScreen() {
-        productDao.findAll().collect{ product ->
-            adapter.toUpdate(product)
-        }
     }
     
     private fun handleFab() {
@@ -69,6 +64,14 @@ class ListProductActivity : UserBaseActivity() {
             }
     }
     
+    private suspend fun refreshScreen() {
+        user.filterNotNull().collect() { user ->
+            productDao.find(user.id).collect {
+                adapter.toUpdate(it)
+            }
+        }
+    }
+    
     @SuppressLint("NotifyDataSetChanged")
     private fun configRecyclerView() {
         val recyclerView = binding.activityListProdRecyclerView
@@ -81,12 +84,13 @@ class ListProductActivity : UserBaseActivity() {
                     startActivity(this)
                 }
         }
-       
+        
         adapter.handleClickOnRemove = {
             lifecycleScope.launch {
                 productDao.remove(it)
                 toast("Produto removido com sucesso!!")
             }
+        
         }
         
         adapter.handleClickOnEdit = {
@@ -96,8 +100,9 @@ class ListProductActivity : UserBaseActivity() {
                     startActivity(this)
                 }
         }
-        
     }
+    
+    
 }
 
 
