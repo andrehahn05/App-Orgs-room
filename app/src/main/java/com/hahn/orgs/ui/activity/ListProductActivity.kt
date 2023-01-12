@@ -3,18 +3,14 @@ package com.hahn.orgs.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
-import com.hahn.orgs.database.preferences.dataStore
-import com.hahn.orgs.database.preferences.userLoggedPreferences
 import com.hahn.orgs.databinding.ActivityListProductBinding
 import com.hahn.orgs.extensions.toast
 import com.hahn.orgs.ui.recyclerView.adapter.ProductListAdapter
 import kotlinx.coroutines.launch
 
-class ListProductActivity : AppCompatActivity() {
+class ListProductActivity : UserBaseActivity() {
     
     private val adapter = ProductListAdapter(this)
     private val binding by lazy {
@@ -33,24 +29,15 @@ class ListProductActivity : AppCompatActivity() {
         setContentView(binding.root)
         configRecyclerView()
         handleFab()
+        
         lifecycleScope.launch {
             refreshScreen()
         }
     }
     
     private suspend fun refreshScreen() {
-        lifecycleScope.launch {
-            productDao.findAll().collect{ product ->
-                adapter.toUpdate(product)
-            }
-        }
-        
-        dataStore.data.collect { preferences ->
-            preferences[userLoggedPreferences]?.let { userId ->
-                userDao.findById(userId).collect{
-                    Log.i("ListaProdutos", "onCreate: $it")
-                }
-            }
+        productDao.findAll().collect{ product ->
+            adapter.toUpdate(product)
         }
     }
     
