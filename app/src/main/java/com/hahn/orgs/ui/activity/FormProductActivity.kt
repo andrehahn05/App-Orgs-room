@@ -75,6 +75,7 @@ class FormProductActivity : UserBaseActivity() {
             lifecycleScope.launch {
                 user.firstOrNull()?.let { user ->
                     productDao.add(createProduct(user.id))
+                    finish()
                 }
             }
         }
