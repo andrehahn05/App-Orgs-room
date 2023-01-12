@@ -11,7 +11,7 @@ interface ProductDao {
     fun findAll(): Flow<List<Product>>
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun store(vararg product:Product)
+    suspend fun add(vararg product:Product)
     
     @Delete
     suspend fun remove(vararg product: Product)

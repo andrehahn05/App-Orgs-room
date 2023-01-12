@@ -1,7 +1,6 @@
 package com.hahn.orgs.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.database.dao.ProductDao
@@ -9,10 +8,11 @@ import com.hahn.orgs.databinding.ActivityFormProductBinding
 import com.hahn.orgs.extensions.tryLoadimage
 import com.hahn.orgs.model.Product
 import com.hahn.orgs.ui.dialog.FormImageDialog
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-class FormProductActivity : AppCompatActivity() {
+class FormProductActivity : UserBaseActivity() {
     
     private var url: String? = null
     private var productId = 0L
@@ -73,14 +73,14 @@ class FormProductActivity : AppCompatActivity() {
         val btnSave = binding.btnFormSaveProd
         btnSave.setOnClickListener {
             lifecycleScope.launch {
-                val newProduct = createProduct()
-                productDao.store(newProduct)
-                finish()
+                user.firstOrNull()?.let { user ->
+                    productDao.add(createProduct(user.id))
+                }
             }
         }
     }
     
-    private fun createProduct(): Product {
+    private fun createProduct(userId: String): Product {
         val inputName = binding.activityFormName
         val inputDescription = binding.activityFormDescription
         val inputPrice = binding.activityFormVal
@@ -95,6 +95,7 @@ class FormProductActivity : AppCompatActivity() {
             description = descripition,
             price = value,
             image = url,
+            userId = userId
         )
     }
 }
