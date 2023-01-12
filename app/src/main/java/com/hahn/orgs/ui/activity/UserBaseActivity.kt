@@ -21,8 +21,8 @@ abstract class UserBaseActivity: AppCompatActivity() {
     private val userDao by lazy {
         AppDatabase.getInstance(this).userDao()
     }
-    private var _user: MutableStateFlow<User?> = MutableStateFlow(null)
-    protected var user: StateFlow<User?> = _user
+    private val _user: MutableStateFlow<User?> = MutableStateFlow(null)
+    protected val user: StateFlow<User?> = _user
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState )

@@ -28,7 +28,7 @@ class FormUserRegisterActivity: AppCompatActivity() {
             val newUser = createUser()
             lifecycleScope.launch {
                 try {
-                    dao.store(newUser)
+                    dao.add(newUser)
                     finish()
                 } catch (e: Exception){
                     Toast.makeText(

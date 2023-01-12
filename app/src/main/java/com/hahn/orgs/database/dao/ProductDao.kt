@@ -10,6 +10,9 @@ interface ProductDao {
     @Query("SELECT * FROM Product")
     fun findAll(): Flow<List<Product>>
     
+    @Query("SELECT * FROM product WHERE userId = :userId")
+    fun find(userId: String): Flow<List<Product>>
+    
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(vararg product:Product)
     

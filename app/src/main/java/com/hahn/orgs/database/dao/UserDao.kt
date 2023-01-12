@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Insert
-    suspend fun store(user: User)
+    suspend fun add(user: User)
     
     @Query("SELECT * FROM User WHERE id = :userId AND password = :password")
     suspend fun auth(userId: String, password:String): User?
