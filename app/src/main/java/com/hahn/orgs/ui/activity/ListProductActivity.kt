@@ -58,14 +58,6 @@ class ListProductActivity : UserBaseActivity() {
             }
     }
     
-    private suspend fun refreshScreen() {
-        user.filterNotNull().collect() { user ->
-            productDao.find(user.id).collect {
-                adapter.toUpdate(it)
-            }
-        }
-    }
-    
     @SuppressLint("NotifyDataSetChanged")
     private fun configRecyclerView() {
         val recyclerView = binding.activityListProdRecyclerView
@@ -84,7 +76,7 @@ class ListProductActivity : UserBaseActivity() {
                 productDao.remove(it)
                 toast("Produto removido com sucesso!!")
             }
-        
+            
         }
         
         adapter.handleClickOnEdit = {
@@ -106,36 +98,68 @@ class ListProductActivity : UserBaseActivity() {
             }
             R.id.menu_list_product_order_nameAsc -> {
                 lifecycleScope.launch {
-                    productDao.orderNameAsc().collect() {
-                        adapter.toUpdate(it)
-                    }
+                    orderNameAsc()
                 }
             }
             R.id.menu_list_product_order_nameDesc -> {
                 lifecycleScope.launch {
-                    productDao.orderNameDesc().collect() {
-                        adapter.toUpdate(it)
-                    }
+                    orderNameDesc()
                 }
             }
             R.id.menu_list_product_order_valueAsc -> {
                 lifecycleScope.launch {
-                    productDao.orderValueAsc().collect() {
-                        adapter.toUpdate(it)
-                    }
+                    orderValueAsc()
                 }
             }
             R.id.menu_list_product_order_valueDesc -> {
                 lifecycleScope.launch {
-                    productDao.orderValueDesc().collect() {
-                        adapter.toUpdate(it)
-                    }
+                    orderValueDesc()
                 }
             }
             R.id.menu_list_product_order_noOrder -> {
                 lifecycleScope.launch {
                     refreshScreen()
                 }
+            }
+        }
+    }
+    
+    private suspend fun orderValueDesc() {
+        user.filterNotNull().collect() { user ->
+            productDao.orderValueDesc(user.id).collect() {
+                adapter.toUpdate(it)
+            }
+        }
+    }
+    
+    private suspend fun orderValueAsc() {
+        user.filterNotNull().collect() { user ->
+            productDao.orderValueAsc(user.id).collect() {
+                adapter.toUpdate(it)
+            }
+        }
+    }
+    
+    private suspend fun orderNameDesc() {
+        user.filterNotNull().collect() { user ->
+            productDao.orderNameDesc(user.id).collect() {
+                adapter.toUpdate(it)
+            }
+        }
+    }
+    
+    private suspend fun orderNameAsc() {
+        user.filterNotNull().collect() { user ->
+            productDao.orderNameAsc(user.id).collect() {
+                adapter.toUpdate(it)
+            }
+        }
+    }
+    
+    private suspend fun refreshScreen() {
+        user.filterNotNull().collect() { user ->
+            productDao.find(user.id).collect {
+                adapter.toUpdate(it)
             }
         }
     }

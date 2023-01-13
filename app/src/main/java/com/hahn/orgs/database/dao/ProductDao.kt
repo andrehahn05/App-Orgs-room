@@ -22,17 +22,17 @@ interface ProductDao {
     @Query("SELECT * FROM Product WHERE id = :id")
     fun findById(id: Long) : Flow<Product?>
     
-    @Query("SELECT * FROM Product ORDER BY name ASC")
-    fun orderNameAsc() : Flow<List<Product>>
+    @Query("SELECT * FROM Product WHERE userId = :userId ORDER BY name ASC")
+    fun orderNameAsc(userId: String) : Flow<List<Product>>
     
-    @Query("SELECT * FROM Product ORDER BY name DESC")
-    fun orderNameDesc() : Flow<List<Product>>
+    @Query("SELECT * FROM Product WHERE userId = :userId ORDER BY name DESC")
+    fun orderNameDesc(userId: String) : Flow<List<Product>>
     
-    @Query("SELECT * FROM Product ORDER BY price ASC")
-    fun orderValueAsc() : Flow<List<Product>>
+    @Query("SELECT * FROM Product WHERE userId = :userId ORDER BY price ASC")
+    fun orderValueAsc(userId: String) : Flow<List<Product>>
     
-    @Query("SELECT * FROM Product ORDER BY price DESC")
-    fun orderValueDesc() : Flow<List<Product>>
+    @Query("SELECT * FROM Product WHERE userId = :userId ORDER BY price DESC")
+    fun orderValueDesc(userId: String) : Flow<List<Product>>
     
     
     
