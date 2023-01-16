@@ -55,4 +55,5 @@ abstract class UserBaseActivity: AppCompatActivity() {
         }
         finish()
     }
+    
 }

@@ -1,11 +1,11 @@
 package com.hahn.orgs.ui.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.hahn.orgs.database.AppDatabase
 import com.hahn.orgs.databinding.ActivityFormUserRegisterBinding
+import com.hahn.orgs.extensions.toast
 import com.hahn.orgs.model.User
 import kotlinx.coroutines.launch
 
@@ -31,11 +31,7 @@ class FormUserRegisterActivity: AppCompatActivity() {
                     dao.add(newUser)
                     finish()
                 } catch (e: Exception){
-                    Toast.makeText(
-                        this@FormUserRegisterActivity,
-                        "Falha ao cadastrar usuário",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast("Falha ao cadastrar usuário")
                 }
             }
         }
