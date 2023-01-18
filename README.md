@@ -3,7 +3,7 @@
 # App-Orgs-Room-Migrations
 
 App persistencia-de-dados-com-room-migrations
-Formação Android com Kotlin Alura-Cursos(https://cursos.alura.com.br/formacao-android-kotlin)
+[Formação Android com Kotlin Alura-Cursos ](https://cursos.alura.com.br/formacao-android-kotlin)
 
 ## 🔨 Funcionalidades do projeto
 
@@ -11,7 +11,9 @@ O App lista produtos com imagem, título, descrição e valor. Também, é poss�
 
 
 
-![](img/amostra.gif)
+## Cadastro e Login
+
+![cadastroOrgsRoom](https://user-images.githubusercontent.com/46737586/213084148-7dd65dd2-618c-49b3-8eeb-1e3833cfa18e.gif)
 
 ## ✔️ Técnicas e tecnologias utilizadas
 
