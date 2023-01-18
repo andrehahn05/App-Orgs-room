@@ -20,6 +20,21 @@ Menus de opções para ordenar produtos por nome " A-Z, Z-A " ou  por valor.
 
 ![menu_filtro](https://user-images.githubusercontent.com/46737586/213306302-0e0c29e9-d8f0-47e3-9cac-79f1f7b1806d.gif)
 
+## Menu de popup
+
+Menu de popup ( Editar e Remover )  ao clicar e pressionar um item da lista de produtos.
+
+![menu_popup](https://user-images.githubusercontent.com/46737586/213311233-10c06ec5-ea1d-45f1-890d-d1a019347543.gif)
+
+## 📁 Acesso ao projeto
+Você pode clonar projeto
+```
+git clone git@github.com:andrehahn05/app-orgs-com-Kotlin-room-migrations.git
+```
+or
+
+Você pode pode [baixar-lo](https://github.com/andrehahn05/app-orgs-com-Kotlin-room-migrations/archive/refs/heads/main.zip) zip
+
 ## ✔️ Técnicas e tecnologias utilizadas
 
 As técnicas e tecnologias utilizadas pra isso são:
