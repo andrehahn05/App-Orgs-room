@@ -15,6 +15,11 @@ O App lista produtos com imagem, título, descrição e valor. Também, é poss�
 
 ![cadastroOrgsRoom](https://user-images.githubusercontent.com/46737586/213084148-7dd65dd2-618c-49b3-8eeb-1e3833cfa18e.gif)
 
+## Ordenação de produtos
+Menus de opções para ordenar produtos por nome " A-Z, Z-A " ou  por valor.
+
+![menu_filtro](https://user-images.githubusercontent.com/46737586/213306302-0e0c29e9-d8f0-47e3-9cac-79f1f7b1806d.gif)
+
 ## ✔️ Técnicas e tecnologias utilizadas
 
 As técnicas e tecnologias utilizadas pra isso são:
