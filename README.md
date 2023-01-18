@@ -1,14 +1,15 @@
 
 
-# App-Orgs-Room
-<h4 align="center"> 
-	🚧  App-Orgs-Room kotlin 🚀 Construção  ...  🚧
-</h4>
-App  persistencia-de-dados-com-room  Android com Kotlin Escola Alura-Cursos
+# App-Orgs-Room-Migrations
+
+App persistencia-de-dados-com-room-migrations
+Formação Android com Kotlin Alura-Cursos(https://cursos.alura.com.br/formacao-android-kotlin)
 
 ## 🔨 Funcionalidades do projeto
 
-O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar, editar, deletar produtos.
+O App lista produtos com imagem, título, descrição e valor. Também, é possível cadastrar, editar, deletar, produtos e filtrar a busca.
+
+
 
 ![](img/amostra.gif)
 
@@ -16,13 +17,14 @@ O App lista produtos com imagem, título, descrição e valor. Também, é poss�
 
 As técnicas e tecnologias utilizadas pra isso são:
 
-- `CardView`: container para apresentar cada produto na lista de produtos
-- `RecyclerView`: listagem das produtos
-- `ConstraintLayout`: ViewGroup padrão para implementar todos os layouts
-- `ImageView`: View para apresentar imagens no App
 - `Coil`: carregar imagens via requisição HTTP
 - `View Binding`: busca de views do layout de forma segura
 - `AlertDialog`: Exibição de formulário para carregar novas imagens do produto
 - `Fontes personalizadas`: configuração para adicionar novas fontes
 - `Extension functions`: adicionar comportamentos em outras classes para reutilizá-los
-- `Personalização de tema`: modificação de cores para o tema do App
+- `Fluxo de autenticação com DataStore`: armazenar tipos primitivos via preferences, como por exemplo, o id do usuário autenticado
+- `Migration`: permitir que o App evolua cada vez que as entidades do Room são modificadas, pois modificam também o schema do banco de dados
+- `Coroutines e Flow`: utilizados para fazer a comunicação com o Room e o DataStore
+- `StateFlow`: permitir a alteração do valor do Flow fora do builder, como por exemplo, atualizar o valor ao coletar novos valores de um outro Flow.
+- `Activity base`: compartilhar código comum entre as Activities, como por exemplo, código de autenticação que permite acessar o usuário logado, deslogar do App e verificar se o usuário está ou não logado
+- `Relacionamento no Room`: configurar entidade para identificar a qual registro ela pertence, como por exemplo, um produto que pertence a um usuário
