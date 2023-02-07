@@ -50,7 +50,7 @@ Você pode clonar projeto
 ```
 git clone git@github.com:andrehahn05/app-orgs-com-Kotlin-room-migrations.git
 ```
-or
+se preferir
 
 Você pode pode [baixar-lo](https://github.com/andrehahn05/app-orgs-com-Kotlin-room-migrations/archive/refs/heads/main.zip) zip
 
